@@ -12,6 +12,12 @@ class Entity < ActiveRecord::Base
     m.amount > 0 ? (return nil) : (return m)
   end
 
+  def biggest_debit_in_current_month
+    m = movements.where('amount < 0').where('? = strftime(\'%m\', movements.created_at)', Time.now.month.to_s).min_by { |m| m.amount }
+    return nil if m.nil?
+    m.amount > 0 ? (return nil) : (return m)
+  end
+
   def amount_spent_prior_month
     movements.where('? = date(movements.created_at, \'start of month\', \'-1 month\')', (Time.now.month - 1.month).to_s).reduce(0){ |sum, m| sum += m.total }.abs
   end
@@ -26,12 +32,6 @@ class Entity < ActiveRecord::Base
 
   def movements_count_prior_month
     movements.where('? = date(movements.created_at, \'start of month\', \'-1 month\')', (Time.now.month - 1.month).to_s).count
-  end
-
-  def biggest_debit_in_current_month
-    m = movements.where('amount < 0').where('? = strftime(\'%m\', movements.created_at)', Time.now.month.to_s).min_by { |m| m.amount }
-    return nil if m.nil?
-    m.amount > 0 ? (return nil) : (return m)
   end
 
   def biggest_credit
