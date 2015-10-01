@@ -11,7 +11,7 @@
     </thead>
     <% @entity.movements.each do |m| %>
     <tr>
-      <td><%= m.created_at %></td>
+      <td><%= link_to m.created_at, m %></td>
       <td><%= m.description %></td>
       <% if m.amount > 0 %>
       <td></td><td><%= number_to_currency(m.amount) %></td>

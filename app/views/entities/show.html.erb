@@ -1,5 +1,17 @@
 <p id="notice"><%= notice %></p>
 
+<%
+biggest_debit = @entity.biggest_debit
+biggest_debit_month = @entity.biggest_debit_in_current_month
+number_of_transactions = @entity.movements.count
+number_of_transactions_last_month = @entity.movements_count_prior_month
+balance = @entity.accounts_balance
+biggest_debitor = @entity.biggest_debitor
+amount_spent_prior_month = @entity.amount_spent_prior_month
+amount_spent_current_month = @entity.amount_spent_current_month
+%>
+
+
 <div class="main">
   <p>
     <strong>Customer Name:</strong> <%= @entity.name %><br/>
@@ -9,9 +21,8 @@
     <div class="column">
     <p>
       <strong>Account Summary</strong>
-      <% balance = @entity.accounts_balance %>
       <% if balance < 0 %>
-      <p class="blink_text" style="color: red">Your balance is below zero!</p>
+      <p class="blink_text" style="color: red">Your balance is below zero! 💸 💸</p>
       <% end %>
       <table border=1>
         <tr>
@@ -19,9 +30,52 @@
           <td><%= number_to_currency(balance) %></td>
         </tr>
         <tr>
-          <td>Number of Transactions</td>
-          <td><%= @entity.movements.count %></td>
+          <td>Number of Transactions (Current Month)</td>
+          <td><%= number_of_transactions %></td>
         </tr>
+        <tr>
+          <td>Number of Transactions (Last Month)</td>
+          <td><%= number_of_transactions_last_month %></td>
+        </tr>
+        <tr>
+          <td>Amount spent (Current Month)</td>
+          <td><%= number_to_currency(amount_spent_current_month) %></td>
+        </tr>
+        <tr>
+          <td>Amount spent (Last Month)</td>
+          <td><%= number_to_currency(amount_spent_prior_month) %></td>
+        </tr>
+
+        <tr>
+          <td>Largest expense (All time)</td>
+          <td>
+            <% if biggest_debit %>
+              <%= number_to_currency(biggest_debit.amount) %> to <%= biggest_debit.other_party %>
+            <% else %>
+              <i>No debits</i>
+            <% end %>
+          </td>
+        </tr>
+
+        <tr>
+          <td>Largest expense (Current Month)</td>
+          <td>
+            <% if biggest_debit_month %>
+              <%= number_to_currency(biggest_debit_month.amount) %> to <%= biggest_debit_month.other_party %>
+            <% else %>
+              <i>No debits</i>
+            <% end %>
+          </td>
+        </tr>
+
+        <% if biggest_debitor[:amount] %>
+        <tr>
+          <td>Largest Debitor (All Time)</td>
+          <td>
+            You've spent <%= number_to_currency(biggest_debitor[:amount]) %> at <%= biggest_debitor[:name] %>
+          </td>
+        </tr>
+        <% end %>
 
       </table>
     </p>

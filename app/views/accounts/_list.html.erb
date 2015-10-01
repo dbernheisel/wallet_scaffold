@@ -10,7 +10,7 @@
     </thead>
     <% @entity.accounts.each do |a| %>
     <tr>
-      <td><%= a.name %></td>
+      <td><%= link_to a.name, a %></td>
       <td><%= a.id %></td>
       <td><%= a.created_at %></td>
       <td><%= number_to_currency(a.total) %></td>

@@ -5,6 +5,7 @@ class Account < ActiveRecord::Base
   validates :entity, presence: true
 
   def total
+    return 0 if movements.count == 0
     movements.sum(:amount)
   end
 
