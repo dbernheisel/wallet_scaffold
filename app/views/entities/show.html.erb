@@ -50,7 +50,7 @@ amount_spent_current_month = @entity.amount_spent_current_month
           <td>Largest expense (All time)</td>
           <td>
             <% if biggest_debit %>
-              <%= number_to_currency(biggest_debit.amount) %> to <%= biggest_debit.other_party %>
+              <%= number_to_currency(biggest_debit.amount.abs) %> to <%= biggest_debit.other_party %>
             <% else %>
               <i>No debits</i>
             <% end %>
@@ -61,7 +61,7 @@ amount_spent_current_month = @entity.amount_spent_current_month
           <td>Largest expense (Current Month)</td>
           <td>
             <% if biggest_debit_month %>
-              <%= number_to_currency(biggest_debit_month.amount) %> to <%= biggest_debit_month.other_party %>
+              <%= number_to_currency(biggest_debit_month.amount.abs) %> to <%= biggest_debit_month.other_party %>
             <% else %>
               <i>No debits</i>
             <% end %>
@@ -72,7 +72,7 @@ amount_spent_current_month = @entity.amount_spent_current_month
         <tr>
           <td>Largest Debitor (All Time)</td>
           <td>
-            You've spent <%= number_to_currency(biggest_debitor[:amount]) %> at <%= biggest_debitor[:name] %>
+            You've spent <%= number_to_currency(biggest_debitor[:amount].abs) %> at <%= biggest_debitor[:other_party] %>
           </td>
         </tr>
         <% end %>

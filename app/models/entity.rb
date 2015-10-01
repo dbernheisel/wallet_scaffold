@@ -39,13 +39,15 @@ class Entity < ActiveRecord::Base
   end
 
   def biggest_debitor
-    debits = movements.select { |m| m.amount < 0 }
-    debitors = debits.group_by { |m| m.other_party }
-    return {name: nil, amount: nil} if debitors.length == 0
-    debitor = debitors.max_by {|k,v| v.reduce(0) { |sum,d| sum += d.amount } }
-    {
-      name: debitor[0],
-      amount: debitor[1].reduce(0) { |sum,d| sum += d.amount }.abs
-    }
+    m = movements.where("amount < 0").group(:other_party).order("sum(amount)").first
+
+    # debits = movements.select { |m| m.amount < 0 }
+    # debitors = debits.group_by { |m| m.other_party }
+    # return {name: nil, amount: nil} if debitors.length == 0
+    # debitor = debitors.max_by {|k,v| v.reduce(0) { |sum,d| sum += d.amount } }
+    # {
+    #   name: debitor[0],
+    #   amount: debitor[1].reduce(0) { |sum,d| sum += d.amount }.abs
+    # }
   end
 end
