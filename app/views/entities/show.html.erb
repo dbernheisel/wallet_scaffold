@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<div class="main">
+  <p>
+    <strong>Customer Name:</strong> <%= @entity.name %><br/>
+    <%= link_to 'Edit', edit_entity_path(@entity) %> | <%= link_to 'Back', entities_path %>
+  </p>
+  <div class="row">
+    <div class="column">
+    <p>
+      <strong>Account Summary</strong>
+      <% balance = @entity.accounts_balance %>
+      <% if balance < 0 %>
+      <p class="blink_text" style="color: red">Your balance is below zero!</p>
+      <% end %>
+      <table border=1>
+        <tr>
+          <td>Customer Balance</td>
+          <td><%= number_to_currency(balance) %></td>
+        </tr>
+        <tr>
+          <td>Number of Transactions</td>
+          <td><%= @entity.movements.count %></td>
+        </tr>
+
+      </table>
+    </p>
+
+    <hr>
+
+    <p><strong><%= link_to 'Accounts', accounts_path %></strong> <small><%= link_to 'Open a new account', new_account_path %></small></p>
+    <p><%= render partial: 'accounts/list' %></p>
+
+    <hr>
+
+    <p><strong><%= link_to 'Transactions', movements_path %></strong> <small><%= link_to 'Create a new transaction', new_movement_path %></small></p>
+
+    <p><%= render partial: 'movements/list' %></p>
+
+    </div>
+  </div>
+  <div class="column">
+
+
+
+
+
+  </div>
+</div>
+
+

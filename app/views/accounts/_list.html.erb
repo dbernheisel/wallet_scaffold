@@ -1,0 +1,22 @@
+<% if @entity.accounts.length > 0 %>
+  <table border=1>
+    <thead>
+      <tr>
+        <td>Account Name</td>
+        <td>Account Number</td>
+        <td>Date Opened</td>
+        <td>Amount</td>
+      </tr>
+    </thead>
+    <% @entity.accounts.each do |a| %>
+    <tr>
+      <td><%= a.name %></td>
+      <td><%= a.id %></td>
+      <td><%= a.created_at %></td>
+      <td><%= number_to_currency(a.total) %></td>
+    </tr>
+    <% end %>
+  </table>
+<% else %>
+  <i>No accounts</i>
+<% end %>

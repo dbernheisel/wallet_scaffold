@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= number_to_currency(@movement.amount) %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @movement.description %>
+</p>
+
+<p>
+  <strong>Account ID:</strong>
+  <%= @movement.account_id %>
+</p>
+
+<p>
+  <strong>Other Party:</strong>
+  <%= @movement.other_party %>
+</p>
+
+<p>
+  <strong>Transaction Date:</strong>
+  <%= @movement.created_at %>
+</p>
+
+<%= link_to 'Edit', edit_movement_path(@movement) %> |
+<%= link_to 'Back', movements_path %>
